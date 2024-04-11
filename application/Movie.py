@@ -13,11 +13,6 @@ vectors = cv.fit_transform(data['tag']).toarray()
 similarity = cosine_similarity(vectors)
 moviesList = data['original_title'].values.tolist()
 
-data2 = pd.read_csv("collaborative.csv")
-ratings = pd.DataFrame(data2.groupby('title')['rating'].mean(), columns=['rating'])
-ratings['total no of ratings'] = data2.groupby('title')['rating'].count()
-movieMatrix = pd.pivot_table(index='user_id', columns='title', values='rating', data=data2, fill_value=0)
-
 def content_based_recommend(movie_name):
     try:
         # Finding the closest match based on common words
