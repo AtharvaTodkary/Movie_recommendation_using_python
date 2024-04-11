@@ -56,7 +56,7 @@ def content_based_recommend(movie_name):
         return [], movie_name
 
 st.set_page_config(layout="wide")
-st.title("HYBRID MOVIE RECOMMENDATION SYSTEM :popcorn::popcorn::popcorn:")
+st.title(" MOVIE RECOMMENDATION SYSTEM")
 flag1 = 0
 with st.form('recommendMovies'):
     user_id = st.text_input("ENTER USER ID")
