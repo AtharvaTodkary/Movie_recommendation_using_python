@@ -1,4 +1,4 @@
-import time
+# import time
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -12,6 +12,7 @@ cv = CountVectorizer(max_features=5000, stop_words='english')
 vectors = cv.fit_transform(data['tag']).toarray()
 similarity = cosine_similarity(vectors)
 moviesList = data['original_title'].values.tolist()
+
 
 def content_based_recommend(movie_name):
     try:
@@ -56,12 +57,12 @@ def content_based_recommend(movie_name):
         return [], movie_name
 
 st.set_page_config(layout="wide")
-st.title(" MOVIE RECOMMENDATION SYSTEM")
+st.title("Movie Recommendations system")
 flag1 = 0
 with st.form('recommendMovies'):
     user_id = st.text_input("ENTER USER ID")
     movieName = st.text_input("ENTER MOVIE NAME")
-    rating = st.slider("RATE THE MOVIE", min_value=1, max_value=5, step=1)
+    rating = st.slider("RATE THE MOVIE", min_value=1, max_value=10, step=1)
     if st.form_submit_button("SUBMIT"):
         flag1 = 1
         movies, searched_movie = content_based_recommend(movieName)
@@ -71,8 +72,8 @@ with st.form('recommendMovies'):
             st.write(f"Rating given: {rating}")
             st.title("Movies recommended for you")
             index = 0
-            while index < 9:
-                col1, col2, col3 = st.columns(3)
+            while index < 12:
+                col1, col2, col3, col4= st.columns(4)
 
                 # Display information for the first movie
                 col1.markdown(f"<h5>{movies[index][0]}</h5>", True)
@@ -105,6 +106,17 @@ with st.form('recommendMovies'):
                     col3.image(
                         "https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=1456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", width=200)
                 # col3.markdown(f"<a href = '{movies[index][1]}'>Click</a>", True)
+
+                # Increment index
+                index += 1
+                
+                # Display information for the first movie
+                col4.markdown(f"<h5>{movies[index][0]}</h5>", True)
+                try:
+                    col4.image(movies[index][2], width=200)
+                except Exception as e:
+                    col4.image("https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=1456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", width=200)
+                # col1.markdown(f"<a href = '{movies[index][1]}'>Click</a>", True)
 
                 # Increment index
                 index += 1
